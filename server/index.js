@@ -1,8 +1,11 @@
+"use strict";
+
 var express = require('express'),
     app     = express();
 
 (function init(){
     require('./configs')(app);
+    require('./models')(app);
 }());
 
 (function start() {
