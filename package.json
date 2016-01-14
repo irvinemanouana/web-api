@@ -1,0 +1,8 @@
+{
+  "name": "esgi-event-iam-server",
+  "version": "0.0.0",
+  "private": true,
+  "dependencies": {
+    "express": "^4.13.3"
+  }
+}
