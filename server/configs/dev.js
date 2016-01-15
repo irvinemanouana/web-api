@@ -5,5 +5,10 @@ module.exports = {
     },
     database: {
         uri: 'mongodb://localhost:27017/ManageEventESGI'
+    },
+    session: {
+        secret: 'EsGi-4A&IAM-3v3n7',
+        url: 'mongodb://localhost:27017/ManageEventESGI-session-db',
+        ttl: 2 * 24 * 60 * 60
     }
 };

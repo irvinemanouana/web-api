@@ -5,6 +5,7 @@ var express = require('express'),
 
 (function init(){
     require('./configs')(app);
+    require('./middlewares')(app)
     require('./actions')(app);
     require('./models')(app);
     require('./routes')(app);
