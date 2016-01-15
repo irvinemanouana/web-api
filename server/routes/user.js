@@ -21,12 +21,12 @@ module.exports = function(app){
         app.actions.user.update
     );
 
-/*
     router.delete('',
         app.middlewares.authenticated,
         app.actions.user.remove
     );
 
+/*
     router.post('/avatar',
         app.middlewares.authenticated,
         app.actions.user.uploadAvatar
