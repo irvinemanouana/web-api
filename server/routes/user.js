@@ -15,13 +15,13 @@ module.exports = function(app){
         app.actions.user.show
     );
 
-/*
     router.put('',
         bodyparser,
         app.middlewares.authenticated,
         app.actions.user.update
     );
 
+/*
     router.delete('',
         app.middlewares.authenticated,
         app.actions.user.remove
