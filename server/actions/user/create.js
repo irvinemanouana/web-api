@@ -1,3 +1,5 @@
+"use strict"
+
 module.exports = function(app) {
     return function(req, res, next){
         var username    = req.body.username,

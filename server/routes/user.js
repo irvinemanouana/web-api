@@ -10,12 +10,12 @@ module.exports = function(app){
         app.actions.user.create
     );
 
-/*
     router.get('',
         app.middlewares.authenticated,
         app.actions.user.show
     );
 
+/*
     router.put('',
         bodyparser,
         app.middlewares.authenticated,
