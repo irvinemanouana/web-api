@@ -25,12 +25,10 @@ module.exports = function(app){
         app.actions.category.update
     );
 
-/*
     router.delete('/:id',
         app.middlewares.authenticated,
         app.actions.category.remove
     );
-*/
 
     return router;
 };

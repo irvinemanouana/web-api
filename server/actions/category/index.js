@@ -6,5 +6,6 @@ module.exports = function(app){
         list:       require('./list')(app),
         show:       require('./show')(app),
         update:     require('./update')(app),
+        remove:     require('./remove')(app),
     };
 };
