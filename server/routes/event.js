@@ -16,12 +16,12 @@ module.exports = function(app){
         app.actions.event.list
     );
 
-/*
     router.get('/:id',
         app.middlewares.authenticated,
         app.actions.event.show
     );
 
+    /*
     router.put('/:id',
         bodyparser,
         app.middlewares.authenticated,
