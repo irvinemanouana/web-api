@@ -25,6 +25,9 @@ module.exports = function(app){
         firstname: {
             type: String,
             require: true
+        },
+        avatar: {
+            type: String
         }
     });
 
