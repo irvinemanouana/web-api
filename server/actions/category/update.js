@@ -18,6 +18,9 @@ module.exports = function(app) {
                     if (err) {
                         return res.status(500).json({ error : err });
                     }
+                    else if ( !instance ) {
+                        return res.status(404).json({ error : 'Category not found' });
+                    }
                     else if ( instance && instance.id != categoryId) {
                         return res.status(500).json({ error : 'this name already used by another category' });
                     } else {
