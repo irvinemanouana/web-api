@@ -15,12 +15,11 @@ module.exports = function(app){
         app.actions.category.list
     );
 
-/*
     router.get('/:id',
-        app.middlewares.authenticated,
         app.actions.category.show
     );
 
+/*
     router.put('/:id',
         bodyparser,
         app.middlewares.authenticated,
