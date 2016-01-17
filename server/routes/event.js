@@ -11,12 +11,12 @@ module.exports = function(app){
         app.actions.event.create
     );
 
-/*
     router.get('/all',
         app.middlewares.authenticated,
         app.actions.event.list
     );
 
+/*
     router.get('/:id',
         app.middlewares.authenticated,
         app.actions.event.show
