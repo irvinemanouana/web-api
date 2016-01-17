@@ -47,11 +47,10 @@ module.exports  = function(app){
         app.actions.user.uploadAvatar
     );
 
-/*
-    router.post('/avatar',
+    router.get('/avatar',
         app.middlewares.authenticated,
         app.actions.user.showAvatar
     );
-*/
+    
     return router;
 };
