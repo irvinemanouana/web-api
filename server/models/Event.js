@@ -24,6 +24,7 @@ module.exports = function(app){
         },
         date: {
             type: Date,
+            min: Date.now,
             require: true
         },
         members: {
