@@ -19,13 +19,13 @@ module.exports = function(app){
         app.actions.category.show
     );
 
-/*
     router.put('/:id',
         bodyparser,
         app.middlewares.authenticated,
         app.actions.category.update
     );
 
+/*
     router.delete('/:id',
         app.middlewares.authenticated,
         app.actions.category.remove
