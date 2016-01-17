@@ -11,12 +11,11 @@ module.exports = function(app){
         app.actions.category.create
     );
 
-/*
-    router.get('',
-        app.middlewares.authenticated,
+    router.get('/all',
         app.actions.category.list
     );
 
+/*
     router.get('/:id',
         app.middlewares.authenticated,
         app.actions.category.show
