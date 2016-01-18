@@ -53,12 +53,11 @@ module.exports = function(app){
         app.actions.event.uploadIcon
     );
 
-/*
     router.get('/:id/icon',
-        app.middlewares.authenticated,
         app.actions.event.showIcon
     );
 
+/*
     router.post('/:id/subscribe/:user',
         app.middlewares.authenticated,
         app.actions.event.subscribe

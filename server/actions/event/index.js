@@ -8,5 +8,6 @@ module.exports = function(app){
         update:         require('./update')(app),
         remove:         require('./remove')(app),
         uploadIcon:     require('./uploadIcon')(app),
+        showIcon:       require('./showIcon')(app),
     };
 };
