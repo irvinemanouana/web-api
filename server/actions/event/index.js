@@ -10,5 +10,6 @@ module.exports = function(app){
         uploadIcon:     require('./uploadIcon')(app),
         showIcon:       require('./showIcon')(app),
         subscribe:      require('./subscribe')(app),
+        unsubscribe:    require('./unsubscribe')(app),
     };
 };
