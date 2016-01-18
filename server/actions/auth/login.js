@@ -23,7 +23,7 @@ module.exports = function(app) {
                 return res.status(500).json({ error : err });
             }
             else if ( !instance ) {
-                return res.status(404).json({ error : 'account not found' });
+                return res.status(404).json({ error : 'Account not found' });
             }
             else if (instance.password != password) {
                 return res.status(401).json({ error : 'Unauthorized' });
