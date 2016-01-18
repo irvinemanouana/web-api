@@ -5,5 +5,6 @@ module.exports = function(app){
         create:     require('./create')(app),
         list:       require('./list')(app),
         show:       require('./show')(app),
+        update:     require('./update')(app),
     };
 };

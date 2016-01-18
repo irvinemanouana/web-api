@@ -39,7 +39,21 @@ module.exports = function(app){
     EventSchema.plugin(require('mongoose-timestamp'));
 
     EventSchema.pre('save', function (next) {
-        this.members.push(this.creator);
+        var self = this;
+        
+        if (this.members.length == 0) {
+            app.models.User.findById(this.creator, 
+                function(err, instance) {
+                    if (err) {
+                        next(err);
+                    }
+                    else {
+                        self.members.push(instance);
+                    }
+                }
+            );
+        }
+        
         next();
     })
 

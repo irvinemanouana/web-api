@@ -21,13 +21,13 @@ module.exports = function(app){
         app.actions.event.show
     );
 
-    /*
     router.put('/:id',
         bodyparser,
         app.middlewares.authenticated,
         app.actions.event.update
     );
 
+/*
     router.delete('/:id',
         app.middlewares.authenticated,
         app.actions.event.remove
