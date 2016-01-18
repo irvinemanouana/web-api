@@ -9,5 +9,6 @@ module.exports = function(app){
         remove:         require('./remove')(app),
         uploadIcon:     require('./uploadIcon')(app),
         showIcon:       require('./showIcon')(app),
+        subscribe:      require('./subscribe')(app),
     };
 };

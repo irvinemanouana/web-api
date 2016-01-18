@@ -57,12 +57,12 @@ module.exports = function(app){
         app.actions.event.showIcon
     );
 
-/*
     router.post('/:id/subscribe/:user',
         app.middlewares.authenticated,
         app.actions.event.subscribe
     );
 
+/*
     router.delete('/:id/unsubscribe/:user',
         app.middlewares.authenticated,
         app.actions.event.unsubscribe
