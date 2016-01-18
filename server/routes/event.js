@@ -1,7 +1,22 @@
 "use strict";
 
-var router = require('express').Router();
-var bodyparser = require('body-parser').json();
+var router      = require('express').Router(),
+    bodyparser  = require('body-parser').json(),
+    multer      = require('multer'),
+    storage     = multer.diskStorage({
+        destination: function (req, file, cb) {
+            cb(null, __dirname.concat('/../../uploads/event'));
+        },
+        filename: function (req, file, cb) {
+            var eventId     = req.params.id,
+                splitName   = file.originalname.split('.'),
+                extension   = '.'.concat(splitName[splitName.length - 1]),
+                filename    = file.fieldname.concat('-', eventId, extension);
+
+            cb(null, filename);
+        }
+    }),
+    upload      = multer({ storage : storage });
 
 module.exports = function(app){
 
@@ -32,12 +47,13 @@ module.exports = function(app){
         app.actions.event.remove
     );
 
-/*
     router.post('/:id/icon',
         app.middlewares.authenticated,
+        upload.single('event'),
         app.actions.event.uploadIcon
     );
 
+/*
     router.get('/:id/icon',
         app.middlewares.authenticated,
         app.actions.event.showIcon
