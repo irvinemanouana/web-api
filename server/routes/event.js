@@ -27,12 +27,12 @@ module.exports = function(app){
         app.actions.event.update
     );
 
-/*
     router.delete('/:id',
         app.middlewares.authenticated,
         app.actions.event.remove
     );
 
+/*
     router.post('/:id/icon',
         app.middlewares.authenticated,
         app.actions.event.uploadIcon
