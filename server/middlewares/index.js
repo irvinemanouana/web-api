@@ -8,6 +8,7 @@ module.exports = function(app){
     app.use(cookieParser());
 
     app.middlewares = {
-        authenticated: require('./authenticated')(app)
+        authenticated:      require('./authenticated')(app),
+        clientErrorHandler: require('./clientErrorHandler')(app),
     }
 };

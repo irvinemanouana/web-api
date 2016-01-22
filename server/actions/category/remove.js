@@ -4,8 +4,8 @@ module.exports = function(app) {
     return function(req, res, next){
         var categoryId = req.params.id;
 
-        if ( !categoryId ) {
-            return res.status(500).send({ error : 'check parameter in url' });
+        if ( !categoryId || !app.utils.isObjectId(categoryId) ) {
+            next(app.errors.BAD_PARAMS_URL);
         }
         else {
             var promise             = app.models.Category.findById(categoryId).exec(),
@@ -13,7 +13,7 @@ module.exports = function(app) {
 
             promise.then(function (instance) {
                 if ( !instance ) {
-                    return res.status(404).json({ error : 'Category not found' });
+                    next(app.errors.CATEGORY_NOT_FOUND);
                 }
                 else {
                     categoryToRemove = instance;
@@ -22,7 +22,7 @@ module.exports = function(app) {
             })
             .then(function (instance) {
                 if (instance) {
-                    return res.status(500).json({ error : 'Cannot to remove category because it is used by events' });
+                    next(app.errors.CATEGORY_USED_BY_EVENTS);
                 }
                 else {
                     return categoryToRemove.remove();
@@ -36,7 +36,7 @@ module.exports = function(app) {
                     res.json(categoryToRemove);
                 }
                 else {
-                    return res.status(500).json({ error : 'Cannot to remove category' });
+                    next(app.errors.CATEGORY_REMOVED_FAILLED);
                 }
             })
             ;
