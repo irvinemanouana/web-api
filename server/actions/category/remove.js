@@ -1,11 +1,11 @@
 "use strict"
 
 module.exports = function(app) {
-    return function(req, res, next){
+    return function(req, res, return next){
         var categoryId = req.params.id;
 
         if ( !categoryId || !app.utils.isObjectId(categoryId) ) {
-            next(app.errors.BAD_PARAMS_URL);
+            return next(app.errors.BAD_PARAMS_URL);
         }
         else {
             var promise             = app.models.Category.findById(categoryId).exec(),
@@ -13,7 +13,7 @@ module.exports = function(app) {
 
             promise.then(function (instance) {
                 if ( !instance ) {
-                    next(app.errors.CATEGORY_NOT_FOUND);
+                    return next(app.errors.CATEGORY_NOT_FOUND);
                 }
                 else {
                     categoryToRemove = instance;
@@ -22,7 +22,7 @@ module.exports = function(app) {
             })
             .then(function (instance) {
                 if (instance) {
-                    next(app.errors.CATEGORY_USED_BY_EVENTS);
+                    return next(app.errors.CATEGORY_USED_BY_EVENTS);
                 }
                 else {
                     return categoryToRemove.remove();
@@ -33,10 +33,10 @@ module.exports = function(app) {
             })
             .then(function (instance) {
                 if ( !instance ) {
-                    res.json(categoryToRemove);
+                    return res.json(categoryToRemove);
                 }
                 else {
-                    next(app.errors.CATEGORY_REMOVED_FAILLED);
+                    return next(app.errors.CATEGORY_REMOVED_FAILLED);
                 }
             })
             ;
