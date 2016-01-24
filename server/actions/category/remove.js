@@ -1,7 +1,7 @@
 "use strict"
 
 module.exports = function(app) {
-    return function(req, res, return next){
+    return function(req, res, next){
         var categoryId = req.params.id;
 
         if ( !categoryId || !app.utils.isObjectId(categoryId) ) {
