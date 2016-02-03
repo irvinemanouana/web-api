@@ -4,7 +4,7 @@ module.exports = function(app) {
     return function(req, res, next){
         var title           = req.body.title,
             categoryId      = req.body.categoryId,
-            userId          = req.session.userId,
+            userId          = req.user.id,
             description     = req.body.description,
             dateString      = req.body.date;
 

@@ -9,7 +9,7 @@ module.exports = function(app){
     app.models.User                 = require('./User')(app);
     app.models.Category             = require('./Category')(app);
     app.models.Event                = require('./Event')(app);
-    app.models.OAuthClients         = require('./OAuthClients')(app);
-    app.models.OAuthRefreshTokens   = require('./OAuthRefreshTokens')(app);
+    app.models.OAuthClient          = require('./OAuthClient')(app);
+    app.models.OAuthRefreshToken    = require('./OAuthRefreshToken')(app);
     app.models.OAuthAccessToken     = require('./OAuthAccessToken')(app);
 };

@@ -13,8 +13,7 @@ module.exports = function(app){
             require: true
         },
         redirectUri: { 
-            type: String,
-            require: true 
+            type: String
         }
     });
 

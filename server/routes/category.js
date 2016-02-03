@@ -7,7 +7,7 @@ module.exports = function(app){
 
     router.post('',
         bodyparser,
-        app.middlewares.authenticated,
+        app.oauth.authorise(),
         app.actions.category.create
     );
 
@@ -21,12 +21,12 @@ module.exports = function(app){
 
     router.put('/:id',
         bodyparser,
-        app.middlewares.authenticated,
+        app.oauth.authorise(),
         app.actions.category.update
     );
 
     router.delete('/:id',
-        app.middlewares.authenticated,
+        app.oauth.authorise(),
         app.actions.category.remove
     );
 

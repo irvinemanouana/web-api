@@ -22,33 +22,33 @@ module.exports = function(app){
 
     router.post('',
         bodyparser,
-        app.middlewares.authenticated,
+        app.oauth.authorise(),
         app.actions.event.create
     );
 
     router.get('/all',
-        app.middlewares.authenticated,
+        app.oauth.authorise(),
         app.actions.event.list
     );
 
     router.get('/:id',
-        app.middlewares.authenticated,
+        app.oauth.authorise(),
         app.actions.event.show
     );
 
     router.put('/:id',
         bodyparser,
-        app.middlewares.authenticated,
+        app.oauth.authorise(),
         app.actions.event.update
     );
 
     router.delete('/:id',
-        app.middlewares.authenticated,
+        app.oauth.authorise(),
         app.actions.event.remove
     );
 
     router.post('/:id/icon',
-        app.middlewares.authenticated,
+        app.oauth.authorise(),
         upload.single('event'),
         app.actions.event.uploadIcon
     );
@@ -58,12 +58,12 @@ module.exports = function(app){
     );
 
     router.post('/:id/subscribe/:user',
-        app.middlewares.authenticated,
+        app.oauth.authorise(),
         app.actions.event.subscribe
     );
 
     router.delete('/:id/unsubscribe/:user',
-        app.middlewares.authenticated,
+        app.oauth.authorise(),
         app.actions.event.unsubscribe
     );
 

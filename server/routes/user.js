@@ -8,7 +8,7 @@ var router      = require('express').Router(),
             cb(null, __dirname.concat('/../../uploads/avatar'));
         },
         filename: function (req, file, cb) {
-            var userId      = req.session.userId,
+            var userId      = req.user.id,
                 splitName   = file.originalname.split('.'),
                 extension   = '.'.concat(splitName[splitName.length - 1]),
                 filename    = file.fieldname.concat('-', userId, extension);
@@ -26,29 +26,29 @@ module.exports  = function(app){
     );
 
     router.get('',
-        app.middlewares.authenticated,
+        app.oauth.authorise(),
         app.actions.user.show
     );
 
     router.put('',
         bodyparser,
-        app.middlewares.authenticated,
+        app.oauth.authorise(),
         app.actions.user.update
     );
 
     router.delete('',
-        app.middlewares.authenticated,
+        app.oauth.authorise(),
         app.actions.user.remove
     );
 
     router.post('/avatar',
-        app.middlewares.authenticated,
+        app.oauth.authorise(),
         upload.single('avatar'),
         app.actions.user.uploadAvatar
     );
 
     router.get('/avatar',
-        app.middlewares.authenticated,
+        app.oauth.authorise(),
         app.actions.user.showAvatar
     );
     

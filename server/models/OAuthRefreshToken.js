@@ -8,8 +8,7 @@ module.exports = function(app){
             require: true
         },
         clientId: { 
-            type : app.mongoose.Schema.ObjectId, 
-            ref : 'OAuthClient',
+            type: String,
             require: true 
         },
         userId: { 

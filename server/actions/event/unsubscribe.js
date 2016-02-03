@@ -3,7 +3,7 @@
 module.exports = function(app) {
     return function(req, res, next){
         var eventId = req.params.id,
-            userId  = req.session.userId,
+            userId  = req.user.id,
             user    = req.params.user;
 
         if ( !eventId || !user) {
@@ -20,7 +20,7 @@ module.exports = function(app) {
                     else if ( !instance ) {
                         return res.status(404).json({ error : 'Event not found' });
                     }
-                    else if (user != userId && instance.creator != userId) {
+                    else if (user != userId && instance.creator.toString() !== userId.toString()) {
                         return res.status(401).json({ error : 'Cannot to remove another user because you are not creator' });
                     }
                     else if ( instance.creator == user ) {
