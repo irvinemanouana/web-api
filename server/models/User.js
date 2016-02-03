@@ -34,6 +34,9 @@ module.exports = function(app){
     UserSchema.plugin(require('mongoose-timestamp'));
 
     UserSchema.pre('save', function (next) {
+
+        if (!this.isModified('password')) next();
+
         var plainPassword = this.password;
         this.password = app.crypto.SHA512(plainPassword);
         next();
