@@ -2,7 +2,7 @@
 
 module.exports = function(app){
 
-    var OAuthClientsSchema = new app.mongoose.Schema({
+    var OAuthClientSchema = new app.mongoose.Schema({
         clientId: { 
             type: String,
             require: true,
@@ -18,7 +18,7 @@ module.exports = function(app){
         }
     });
 
-    OAuthClientsSchema.plugin(require('mongoose-timestamp'));
+    OAuthClientSchema.plugin(require('mongoose-timestamp'));
 
-    return app.mongoose.model('OAuthClients', OAuthClientsSchema);;
+    return app.mongoose.model('OAuthClient', OAuthClientSchema);
 };
