@@ -1,0 +1,12 @@
+[
+    {
+        "clientId": "android_manage_event",
+        "clientSecret": "fraf_uzEch@g5Guh",
+        "redirectUri": "none"
+    },
+    {
+        "clientId": "test_manage_event",
+        "clientSecret": "&&enaDecu266ruw@",
+        "redirectUri": "none"
+    }
+]

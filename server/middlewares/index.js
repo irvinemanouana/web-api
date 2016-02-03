@@ -1,14 +1,16 @@
 "use strict";
 
-var cookieParser = require('cookie-parser');
+var oauthserver     = require('oauth2-server');
 
 module.exports = function(app){
-    require('./session')(app);
-    
-    app.use(cookieParser());
 
-    app.middlewares = {
-        authenticated:      require('./authenticated')(app),
-        clientErrorHandler: require('./clientErrorHandler')(app),
-    }
+    app.middlewares                     = {};
+    app.middlewares.oauthHandler        = require('./oauthHandler')(app);
+    app.middlewares.clientErrorHandler  = require('./clientErrorHandler')(app);
+
+    app.oauth = oauthserver({
+        model: app.middlewares.oauthHandler,
+        grants: ['password', 'refresh_token'],
+        debug: true
+    });
 };

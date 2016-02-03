@@ -2,7 +2,7 @@
 
 module.exports = function(app) {
     return function(req, res, next){
-        var userId  = req.session.userId;
+        var userId  = req.user.id;
 
         app.models.User.findById( userId,
             function(err, instance) {

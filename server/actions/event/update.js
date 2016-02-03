@@ -5,7 +5,7 @@ module.exports = function(app) {
         var eventId         = req.params.id,
             title           = req.body.title,
             categoryId      = req.body.categoryId,
-            userId          = req.session.userId,
+            userId          = req.user.id,
             description     = req.body.description,
             dateString      = req.body.date;
 
@@ -24,7 +24,7 @@ module.exports = function(app) {
                     else if ( !instance ) {
                         return res.status(404).json({ error : 'Event not found' });
                     }
-                    else if ( instance.creator != userId ) {
+                    else if ( instance.creator.toString() !== userId.toString() ) {
                         return res.status(401).json({ error : 'User is not creator' });
                     }
                     else {
