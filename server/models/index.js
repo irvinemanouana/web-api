@@ -11,4 +11,5 @@ module.exports = function(app){
     app.models.Event                = require('./Event')(app);
     app.models.OAuthClients         = require('./OAuthClients')(app);
     app.models.OAuthRefreshTokens   = require('./OAuthRefreshTokens')(app);
+    app.models.OAuthAccessToken     = require('./OAuthAccessToken')(app);
 };
