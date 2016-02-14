@@ -2,18 +2,25 @@
 
 module.exports = function(app) {
     return function(req, res, next){
-        var categoryId = req.params.id;
+        var userId      = req.user.id,
+            categoryId  = req.params.id;
 
-        if ( !categoryId || !global.isObjectId(categoryId) ) {
-            return next(app.errors.BAD_PARAMS_URL);
+        if ( global.isNullOrEmpty(categoryId) ) {
+            return next(app.errors.BAD_PARAMETER_URL);
+        }
+        else if ( !global.isObjectId(categoryId) ) {
+            return next(app.errors.OBJECT_ID_NOT_VALID);
         }
         else {
-            var promise             = app.models.Category.findById(categoryId).exec(),
-                categoryToRemove    = undefined;
+            var categoryToRemove = undefined;
 
-            promise.then(function (instance) {
+            app.models.Category.findById( categoryId ).exec()
+            .then(function(instance) {
                 if ( !instance ) {
                     return next(app.errors.CATEGORY_NOT_FOUND);
+                }
+                else if (instance.creator.id == userId) {
+                    return next(app.errors.CATEGORY_USER_NOT_CREATOR);
                 }
                 else {
                     categoryToRemove = instance;

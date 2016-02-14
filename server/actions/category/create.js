@@ -2,35 +2,31 @@
 
 module.exports = function(app) {
     return function(req, res, next){
-        var name    = req.body.name;
+        var userId  = req.user.id,
+            name    = req.body.name;
 
-        if ( !name ) {
-            return res.status(500).send({ error : 'check body parameter' });
+        if (global.isNullOrEmpty(name)) {
+            return next(app.errors.BAD_BODY_PARAMETER);
         }
         else {
             var category = new app.models.Category({
-                name: name
+                name: name,
+                creator: userId
             });
 
-            app.models.Category.findOne( { name: name },
-                function(err, instance) {
-                    if (err) {
-                        return res.status(500).json({ error : err });
-                    }
-                    else if ( instance ) {
-                        return res.status(500).json({ error : 'Category already exists' });
-                    } else {
-                        category.save(function(err, instance){
-                            if (err) {
-                                return res.status(500).json({ error : err });
-                            }
-                            else {
-                                res.json(instance);
-                            }
-                        });
-                    }
+            app.models.Category.findOne( { name: name } ).exec()
+            .then(function(instance) {
+                if ( instance ) {
+                    return next(app.errors.CATEGORY_ALREADY_EXISTS);
                 }
-            );
+                else {
+                    return category.save();
+                }
+            })
+            .then(function(instance) {
+                res.json(instance);
+            })
+            ;
         }
     }
 };

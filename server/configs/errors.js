@@ -19,6 +19,10 @@ module.exports = {
         code: 1005,
         error: "File is not upload"
     },
+    OBJECT_ID_NOT_VALID: {
+        code: 1006,
+        error: "ID is not valid"
+    },
     USER_ALREADY_EXISTS: {
         code: 2001,
         error: "User already exists"
@@ -44,7 +48,15 @@ module.exports = {
         error: "Category is used by events"
     },
     CATEGORY_REMOVED_FAILLED: {
-        code: 3002,
+        code: 3003,
         error: "Cannot to remove category"
+    },
+    CATEGORY_ALREADY_EXISTS: {
+        code: 3004,
+        error: "Category already exists"
+    },
+    CATEGORY_USER_NOT_CREATOR: {
+        code: 3005,
+        error: "User is not creator of this category"
     }
 };

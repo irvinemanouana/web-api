@@ -7,6 +7,11 @@ module.exports = function(app){
             type: String,
             require: true,
             unique: true
+        },
+        creator: {
+            type : app.mongoose.Schema.ObjectId,
+            ref : 'User',
+            require: true
         }
     });
 

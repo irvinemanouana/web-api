@@ -2,50 +2,50 @@
 
 module.exports = function(app) {
     return function(req, res, next){
-        var userId      = req.user.id,
-            categoryId  = req.params.id,
-            name        = req.body.name;
+        var userId              = req.user.id,
+            categoryId          = req.params.id,
+            name                = req.body.name,
+            categoryToUpdate    = null;
 
-        if ( !categoryId ) {
-            return res.status(500).send({ error : 'check parameter' });
+        if ( global.isNullOrEmpty(categoryId) ) {
+            return next(app.errors.BAD_PARAMETER_URL);
         }
-        else if ( !name ) {
-            return res.status(500).send({ error : 'check body parameter' });
+        else if ( !global.isObjectId(categoryId ) ) {
+            return next(app.errors.OBJECT_ID_NOT_VALID);
+        }
+        else if ( global.isNullOrEmpty(name) ) {
+            return next(app.errors.BAD_BODY_PARAMETER);
         }
         else {
-             app.models.Category.findOne({ name : name },
-                function(err, instance) {
-                    if (err) {
-                        return res.status(500).json({ error : err });
-                    }
-                    else if ( !instance ) {
-                        return res.status(404).json({ error : 'Category not found' });
-                    }
-                    else if ( instance && instance.id != categoryId) {
-                        return res.status(500).json({ error : 'this name already used by another category' });
-                    } else {
-                         app.models.Category.findById(categoryId,
-                            function(err, finding) {
-                                if (err) {
-                                    return res.status(500).json({ error : err });
-                                }
-                                else {
-                                    finding.name = name;
-                                    finding.save(function(err, saving){
-                                        if (err) {
-                                            return res.status(500).json({ error : err });
-                                        }
-                                        else {
-                                            res.json(saving);
-                                        }
-                                    });
-                                }
-                            }
-                        );
-                        
-                    }
+            app.models.Category.findById( categoryId ).exec()
+            .then(function(instance) {
+                if ( !instance ) {
+                    return next(app.errors.CATEGORY_NOT_FOUND);
                 }
-            );
+                else if (instance.creator.id == userId) {
+                    return next(app.errors.CATEGORY_USER_NOT_CREATOR);
+                }
+                else {
+                    categoryToUpdate = instance;
+                    return app.models.Category.findOne( { name : name } ).exec();
+                }
+            })
+            .then(function(instance) {
+                if (instance && instance.id != categoryId) {
+                    return next(app.errors.CATEGORY_ALREADY_EXISTS);
+                }
+                else if (instance && instance.id == categoryId) {
+                    return res.json(instance);
+                }
+                else {
+                    categoryToUpdate.name = name;
+                    return categoryToUpdate.save();
+                }
+            })
+            .then(function(instance) {
+                res.json(instance);
+            })
+            ;
         }
     }
 }
