@@ -27,8 +27,7 @@ module.exports = function(app) {
                 firstname: firstname,
             });
 
-            app.models.User.findOne( { $or: [ { username: username }, { email: email } ] })
-            .exec()
+            app.models.User.findOne( { $or: [ { username: username }, { email: email } ] }).exec()
             .then(function(instance) {
                 if ( instance ) {
                     return next(app.errors.USER_ALREADY_EXISTS);

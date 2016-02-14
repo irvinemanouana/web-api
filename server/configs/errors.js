@@ -15,9 +15,25 @@ module.exports = {
         code: 1004,
         error: "Email is not valid"
     },
+    FILE_NOT_UPLOAD: {
+        code: 1005,
+        error: "File is not upload"
+    },
     USER_ALREADY_EXISTS: {
         code: 2001,
         error: "User already exists"
+    },
+    USER_HAS_NOT_BEEN_REMOVED: {
+        code: 2002,
+        error: "User has not been removed"
+    },
+    USER_NOT_FOUND: {
+        code: 2003,
+        error: "User not found"
+    },
+    USER_AVATAR_NOT_FOUND: {
+        code: 2004,
+        error: "User have not avatar"
     },
     CATEGORY_NOT_FOUND: {
         code: 3001,

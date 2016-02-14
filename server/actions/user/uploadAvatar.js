@@ -5,36 +5,22 @@ module.exports = function(app) {
         var userId  = req.user.id,
             file    = req.file;
 
-        if (file) {
-            app.models.User.findById( userId,
-                function(err, instance) {
-                    if (err) {
-                        return res.status(500).json({ error : err });
-                    } else {
-                        instance.avatar = file.path;
-                        instance.save(function(err, instance){
-                            if (err) {
-                                return res.status(500).json({ error : err });
-                            }
-                            else {
-                                app.models.User.findById(instance.id, 
-                                    function(err, finding) {
-                                        if (err) {
-                                            return res.status(500).json({ error : err });
-                                        }
-                                        else {
-                                            res.json(finding);
-                                        }
-                                    }
-                                );
-                            }
-                        });
-                    }
-                }
-            );
+        if (!file) {
+            return next(app.errors.FILE_NOT_UPLOAD);
         }
         else {
-            return res.status(500).send({ 'error' : 'Upload failed' });
+            app.models.User.findById( userId ).exec()
+            .then(function(instance) {
+                instance.avatar = file.path;
+                return instance.save();
+            })
+            .then(function(instance) {
+                return app.models.User.findById( userId ).exec();
+            })
+            .then(function(instance) {
+                return res.json(instance);
+            })
+            ;
         }
     };
 };

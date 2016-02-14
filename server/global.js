@@ -11,7 +11,7 @@ global.isObjectId = function (id) {
 };
 
 global.isNullOrEmpty = function (str) {
-    return str === null || str.match(/^ *$/) !== null;
+    return str === null || str == undefined || str.match(/^ *$/) !== null;
 };
 
 global.isEmailValid = function (email) {
