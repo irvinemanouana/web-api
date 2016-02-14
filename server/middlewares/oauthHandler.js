@@ -40,7 +40,7 @@ module.exports = function(app){
     };
 
     oauthHandler.getUser = function (username, password, callback) {
-        var hashPassword = app.crypto.SHA512(password);
+        var hashPassword = global.Crypto.SHA512(password);
         app.models.User.findOne({ username: username, password: hashPassword.toString() }, 
             function(err, user) {
                 if(err) {

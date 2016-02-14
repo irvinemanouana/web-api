@@ -38,7 +38,7 @@ module.exports = function(app){
         if (!this.isModified('password')) next();
 
         var plainPassword = this.password;
-        this.password = app.crypto.SHA512(plainPassword);
+        this.password = global.Crypto.SHA512(plainPassword);
         next();
     })
 

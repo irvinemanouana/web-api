@@ -4,6 +4,7 @@ var mongoose = require('mongoose');
 
 module.exports = function(app){
     app.mongoose = mongoose.connect(app.configs.database.uri);
+    global.PromisifyAll(app.mongoose);
 
     app.models                      = {};
     app.models.User                 = require('./User')(app);

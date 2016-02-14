@@ -4,7 +4,7 @@ module.exports = function(app) {
     return function(req, res, next){
         var categoryId = req.params.id;
 
-        if ( !categoryId || !app.utils.isObjectId(categoryId) ) {
+        if ( !categoryId || !global.isObjectId(categoryId) ) {
             return next(app.errors.BAD_PARAMS_URL);
         }
         else {

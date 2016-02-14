@@ -1,5 +1,7 @@
 "use strict";
 
+require('./global');
+
 var express = require('express'),
     app     = express();
 

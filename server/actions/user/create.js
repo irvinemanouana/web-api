@@ -8,46 +8,40 @@ module.exports = function(app) {
             name        = req.body.name,
             firstname   = req.body.firstname;
 
-        if ( !username || !password || !email || !name || !firstname ) {
-            return res.status(500).send({ error : 'check body parameter' });
+        if ( global.isNullOrEmpty(username) || global.isNullOrEmpty(password) || global.isNullOrEmpty(email) || 
+                global.isNullOrEmpty(name) || global.isNullOrEmpty(firstname) ) {
+            return next(app.errors.BAD_BODY_PARAMETER);
+        }
+        else if (password.length < 7){
+            return next(app.errors.PASSWORD_TOO_SHORT);
+        }
+        else if (!global.isEmailValid(email)){
+            return next(app.errors.EMAIL_NOT_VALID);
         }
         else {
             var user = new app.models.User({
-                username: req.body.username,
-                password: req.body.password,
-                email: req.body.email,
-                name: req.body.name,
-                firstname: req.body.firstname,
+                username: username,
+                password: password,
+                email: email,
+                name: name,
+                firstname: firstname,
             });
 
-            app.models.User.findOne( { $or: [ { username: username }, { email: email } ] },
-                function(err, instance) {
-                    if (err) {
-                        return res.status(500).json({ error : err });
-                    }
-                    else if ( instance ) {
-                        return res.status(500).json({ error : 'User already exists' });
-                    } else {
-                        user.save(function(err, instance){
-                            if (err) {
-                                return res.status(500).json({ error : err });
-                            }
-                            else {
-                                app.models.User.findById(instance.id, 
-                                    function(err, finding) {
-                                        if (err) {
-                                            return res.status(500).json({ error : err });
-                                        }
-                                        else {
-                                            res.json(finding);
-                                        }
-                                    }
-                                );
-                            }
-                        });
-                    }
+            app.models.User.findOne( { $or: [ { username: username }, { email: email } ] })
+            .exec()
+            .then(function(instance) {
+                if ( instance ) {
+                    return next(app.errors.USER_ALREADY_EXISTS);
                 }
-            );
+                return user.save();
+            })
+            .then(function(instance) {
+                return app.models.User.findById(instance.id).exec();
+            })
+            .then(function(instance) {
+                return res.json(instance);
+            })
+            ;
         }
     }
 };

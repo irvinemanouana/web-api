@@ -7,6 +7,4 @@ module.exports = function(app){
 
     app.configs = require('./' + env);
     app.errors  = require('./errors');
-    app.crypto  = require('crypto-js');
-    app.utils   = require('./utils');
 };
