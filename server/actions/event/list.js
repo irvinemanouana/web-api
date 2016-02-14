@@ -2,16 +2,16 @@
 
 module.exports = function(app) {
     return function(req, res, next){
-        app.models.Event
-            .find()
-            .populate('category')
-            .exec(function(err, instances) {
-                if (err) {
-                    return res.status(500).json({ error : err });
-                } else {
-                    res.json(instances);
-                }
-            })
+        var count   = parseInt(req.query.count),
+            page    = parseInt(req.query.page),
+            first   = ((count * page) - count);
+
+        app.models.Event.find()
+        .limit(count).skip(first)
+        .populate('category').exec()
+        .then(function(instances) {
+            res.json(instances);
+        })
         ;
     }
 };

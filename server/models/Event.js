@@ -40,22 +40,12 @@ module.exports = function(app){
 
     EventSchema.pre('save', function (next) {
         var self = this;
-        
-        if (this.members.length == 0) {
-            app.models.User.findById(this.creator, 
-                function(err, instance) {
-                    if (err) {
-                        next(err);
-                    }
-                    else {
-                        self.members.push(instance);
-                    }
-                }
-            );
-        }
-        
+
+        if (!this.isModified('creator')) next();
+
+        self.members.push(self.creator);
         next();
-    })
+    });
 
     return app.mongoose.model('Event', EventSchema);;
 };

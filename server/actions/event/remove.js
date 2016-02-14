@@ -5,45 +5,42 @@ module.exports = function(app) {
         var eventId     = req.params.id,
             userId      = req.user.id;
 
-        if ( !eventId ) {
-            return res.status(500).send({ error : 'check parameter' });
+        if ( global.isNullOrEmpty(eventId) ) {
+            return next(app.errors.BAD_PARAMETER_URL);
+        }
+        else if ( !global.isObjectId(eventId ) ) {
+            return next(app.errors.OBJECT_ID_NOT_VALID);
         }
         else {
-            app.models.Event.findById(eventId,
-                function(err, instance) {
-                    if (err) {
-                        return res.status(500).json({ error : err });
-                    }
-                    else if ( !instance ) {
-                        return res.status(404).json({ error : 'Event not found' });
-                    }
-                    else if ( instance.creator.toString() !== userId.toString() ) {
-                        return res.status(401).json({ error : 'User is not creator' });
-                    }
-                    else {
-                        instance.remove(function(err, event) {
-                            if (err) {
-                                return res.status(500).json({ error : err });
-                            }
-                            else {
-                                app.models.Event.findById(instance.id,
-                                    function(err, finding) {
-                                        if (err) {
-                                            return res.status(500).json({ error : err });
-                                        }
-                                        else if (finding) {
-                                            return res.status(500).json({ error : 'Event is not removed' }); 
-                                        }
-                                        else {
-                                            res.json(instance);
-                                        }
-                                    }
-                                );
-                            }
-                        });
-                    }
+            var eventToRemove = undefined;
+
+            app.models.Event.findById(eventId).exec()
+            .then(function(instance) {
+                if (!instance) {
+                    return next(app.errors.EVENT_NOT_FOUND);
                 }
-            );
+                else if (instance.creator.toString() !== userId.toString()) {
+                    return next(app.errors.EVENT_USER_NOT_CREATOR);
+                }
+                else {
+                    eventToRemove = instance;
+                    return instance.remove();
+                }
+            })
+            .then(function(instance) {
+                if (instance) {
+                    return app.models.Event.findById(instance.id).populate('category').exec();
+                }
+            })
+            .then(function(instance) {
+                if ( !instance ) {
+                    return res.json(eventToRemove);
+                }
+                else {
+                    return next(app.errors.EVENT_REMOVED_FAILLED);
+                }
+            })
+            ;
         }
     }
 };

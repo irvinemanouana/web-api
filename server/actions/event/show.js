@@ -4,24 +4,22 @@ module.exports = function(app) {
     return function(req, res, next){
         var eventId = req.params.id;
 
-        if ( !eventId ) {
-            return res.status(500).send({ error : 'check parameter' });
+        if ( global.isNullOrEmpty(eventId) ) {
+            return next(app.errors.BAD_PARAMETER_URL);
+        }
+        else if ( !global.isObjectId(eventId ) ) {
+            return next(app.errors.OBJECT_ID_NOT_VALID);
         }
         else {
-            app.models.Event
-                .findById(eventId)
-                .populate('category')
-                .exec(function(err, instance) {
-                    if (err) {
-                        return res.status(500).json({ error : err });
-                    }
-                    else if ( !instance ) {
-                        return res.status(404).json({ error : 'Event not found' });
-                    }
-                    else {
-                        res.json(instance);
-                    }
-                })
+            app.models.Event.findById(eventId).populate('category').exec()
+            .then(function(instance) {
+                if ( !instance ) {
+                    return next(app.errors.EVENT_NOT_FOUND);
+                }
+                else {
+                    res.json(instance);
+                }
+            })
             ;
         }
     }

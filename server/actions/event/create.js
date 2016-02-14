@@ -2,53 +2,63 @@
 
 module.exports = function(app) {
     return function(req, res, next){
-        var title           = req.body.title,
+        var userId          = req.user.id,
+            title           = req.body.title,
             categoryId      = req.body.categoryId,
-            userId          = req.user.id,
             description     = req.body.description,
-            dateString      = req.body.date;
+            dateString      = req.body.date,
+            date            = new Date(dateString),
+            dateNow         = new Date(); 
 
-        if ( !title || !categoryId || !description || !dateString ) {
-            return res.status(500).send({ error : 'check body parameter' });
+        var eventApp = new app.models.Event({
+            title: title,
+            category: categoryId,
+            creator: userId,
+            description: description,
+            date: date
+        });
+
+
+        if ( global.isNullOrEmpty(title) || global.isNullOrEmpty(categoryId) || 
+                global.isNullOrEmpty(description) || global.isNullOrEmpty(dateString) ) {
+            return next(app.errors.BAD_BODY_PARAMETER);
+        }
+        else if ( !global.isObjectId(categoryId) ) {
+            return next(app.errors.OBJECT_ID_NOT_VALID);
+        }
+        else if ( date.getTime() < dateNow.getTime()) {
+            return next(app.errors.DATE_NOT_VALID);
         }
         else {
-            var eventApp = new app.models.Event({
-                title: title,
-                category: categoryId,
-                creator: userId,
-                description: description,
-                date: new Date(dateString)
-            });
+            var promises = [
+                app.models.Category.findById( categoryId ).exec(),
+                app.models.Event.findOne( {title:title}).exec(),
+            ];
+            
+            global.Promise.all(promises)
+            .then(function (promises) {
+                var category    = promises[0],
+                    event       = promises[1];
 
-            app.models.Category.findById( categoryId,
-                function(err, instance) {
-                    if (err) {
-                        return res.status(500).json({ error : err });
-                    }
-                    else if ( !instance ) {
-                        return res.status(404).json({ error : 'Category not found' });
-                    } else {
-                        eventApp.save(function(err, saving){
-                            if (err) {
-                                return res.status(500).json({ error : err });
-                            }
-                            else {
-                                app.models.Event.findById( saving.id)
-                                    .populate('category')
-                                    .exec(function(err, finding) {
-                                        if (err) {
-                                            return res.status(500).json({ error : err });
-                                        }
-                                        else {
-                                            res.json(finding);
-                                        }
-                                    })
-                                ;
-                            }
-                        });
-                    }
+                if (!category) {
+                    return next(app.errors.CATEGORY_NOT_FOUND);
                 }
-            );
+                else if (event) {
+                    return next(app.errors.EVENT_ALREADY_EXISTS);
+                }
+                else {
+                    return eventApp.save();
+                }
+            })
+            .then(function(instance) {
+                if (instance) {
+                    return app.models.Event.findById(instance.id).populate('category').exec();
+                }
+            })
+            .then(function(instance) {
+                return res.json(instance);
+            })
+            ;
         }
     }
 };

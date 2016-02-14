@@ -6,46 +6,36 @@ module.exports = function(app) {
             userId      = req.user.id,
             file        = req.file;
 
-        console.log(file);
-
-        if (file) {
-            app.models.Event.findById( eventId,
-                function(err, instance) {
-                    if (err) {
-                        return res.status(500).json({ error : err });
-                    }
-                    else if ( !instance ) {
-                        return res.status(404).json({ error : 'Event not found' });
-                    }
-                    else if ( instance.creator.toString() !== userId.toString() ) {
-                        return res.status(401).json({ error : 'User is not creator' });
-                    }
-                    else {
-                        instance.logo = file.path;
-                        instance.save(function(err, saving){
-                            if (err) {
-                                return res.status(500).json({ error : err });
-                            }
-                            else {
-                                app.models.Event.findById( saving.id )
-                                    .populate('category')
-                                    .exec(function(err, finding) {
-                                        if (err) {
-                                            return res.status(500).json({ error : err });
-                                        }
-                                        else {
-                                            res.json(finding);
-                                        }
-                                    })
-                                ;
-                            }
-                        });
-                    }
-                }
-            );
+        if ( global.isNullOrEmpty(eventId) ) {
+            return next(app.errors.BAD_PARAMETER_URL);
+        }
+        else if ( !global.isObjectId(eventId ) ) {
+            return next(app.errors.OBJECT_ID_NOT_VALID);
+        }
+        else if (!file) {
+            return next(app.errors.FILE_NOT_UPLOAD);
         }
         else {
-            return res.status(500).send({ 'error' : 'Upload failed' });
+            app.models.Event.findById( eventId ).exec()
+            .then(function(instance) {
+                if ( !instance ) {
+                    return next(app.errors.EVENT_NOT_FOUND);
+                }
+                else if (instance.creator.toString() !== userId.toString()) {
+                    return next(app.errors.EVENT_USER_NOT_CREATOR);
+                }
+                else {
+                    instance.logo = file.path;
+                    return instance.save();
+                }
+            })
+            .then(function(instance) {
+                return app.models.Event.findById(instance.id).populate('category').exec()
+            })
+            .then(function(instance) {
+                res.json(instance);
+            })
+            ;
         }
     };
 };
