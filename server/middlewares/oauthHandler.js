@@ -43,13 +43,15 @@ module.exports = function(app){
         var hashPassword = global.Crypto.SHA512(password);
         app.models.User.findOne({ username: username, password: hashPassword.toString() }, 
             function(err, user) {
-                if(err) {
-                    console.log("Error getUser : %s", err);
+                if (err) {
                     return callback(err);
-                } 
-                
-                console.log(user);
-                callback(null, user.id);
+                }
+                else if (!user) {
+                    return callback(null, null);
+                }
+                else {
+                    return callback(null, user.id);
+                }
             }
         );
     }
