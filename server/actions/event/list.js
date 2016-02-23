@@ -1,6 +1,18 @@
 "use strict"
 
 module.exports = function(app) {
+    /**
+     * @api {GET} /api/event List events
+     * @apiName List
+     * @apiGroup Event
+     * @apiPermission OAuth2User
+     *
+     * @apiVersion 1.0.0
+     *
+     * @apiDescription Allow to get all events.
+     *
+     * @apiSuccess Event Model
+     */
     return function(req, res, next){
         var count           = parseInt(req.query.count),
             page            = parseInt(req.query.page),

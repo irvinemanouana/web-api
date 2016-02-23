@@ -1,6 +1,21 @@
 "use strict"
 
 module.exports = function(app) {
+    /**
+     * @api {POST} /api/event/:id/subscribe/:user Subscribe user
+     * @apiName Subscribe user
+     * @apiGroup Event
+     * @apiPermission OAuth2User
+     *
+     * @apiVersion 1.0.0
+     *
+     * @apiParam {String} id
+     * @apiParam {String} user
+     *
+     * @apiDescription Allow to subscribe user to event.
+     *
+     * @apiSuccess Event Model
+     */
     return function(req, res, next){
         var userId      = req.user.id,
             eventId     = req.params.id,

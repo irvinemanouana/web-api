@@ -1,6 +1,20 @@
 "use strict"
 
 module.exports = function(app) {
+    /**
+     * @api {POST} /api/event Create event
+     * @apiName Create
+     * @apiGroup Event
+     * @apiPermission OAuth2User
+     *
+     * @apiVersion 1.0.0
+     *
+     * @apiHeader {String} ContentTypes:application/json
+     *
+     * @apiDescription Allow to create event.
+     *
+     * @apiSuccess Event Model
+     */
     return function(req, res, next){
         var userId          = req.user.id,
             title           = req.body.title,
