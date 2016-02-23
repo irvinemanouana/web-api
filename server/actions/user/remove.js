@@ -1,6 +1,18 @@
 "use strict"
 
 module.exports = function(app) {
+    /**
+     * @api {DELETE} /api/user Unsubscribe user
+     * @apiName Unsubscribe
+     * @apiGroup User
+     * @apiPermission OAuth2User
+     *
+     * @apiVersion 1.0.0
+     *
+     * @apiDescription Allow to remove user.
+     *
+     * @apiSuccess User Model without password
+     */
     return function(req, res, next){
         var userId = req.user.id,
             userToRemoved = null;

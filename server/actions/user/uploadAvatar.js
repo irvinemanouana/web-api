@@ -1,6 +1,18 @@
 "use strict"
 
 module.exports = function(app) {
+    /**
+     * @api {POST} /api/user/avatar Upload avatar
+     * @apiName Upload avatar
+     * @apiGroup User
+     * @apiPermission OAuth2User
+     *
+     * @apiVersion 1.0.0
+     *
+     * @apiDescription Allow to upload avatar's user.
+     *
+     * @apiSuccess User Model without password
+     */
     return function(req, res, next){
         var userId  = req.user.id,
             file    = req.file;

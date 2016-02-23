@@ -5,7 +5,7 @@ module.exports = function(app) {
      * @api {GET} /api/category/:id Show category
      * @apiGroup Category
      * @apiName Show
-     * @apiPermission OAuth2User
+     * @apiPermission none
      *
      * @apiVersion 1.0.0
      *

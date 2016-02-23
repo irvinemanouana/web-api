@@ -1,6 +1,18 @@
 "use strict"
 
 module.exports = function(app) {
+    /**
+     * @api {PUT} /api/user Update user
+     * @apiName Update
+     * @apiGroup User
+     * @apiPermission OAuth2User
+     *
+     * @apiVersion 1.0.0
+     *
+     * @apiDescription Allow to update user.
+     *
+     * @apiSuccess User Model without password
+     */
     return function(req, res, next){
         var userId      = req.user.id,
             name        = req.body.name,

@@ -1,6 +1,21 @@
 "use strict"
 
 module.exports = function(app) {
+    /**
+     * @api {POST} /api/user Subscribe user
+     * @apiName Subscribe
+     * @apiGroup User
+     * @apiPermission none
+     *
+     * @apiVersion 1.0.0
+     *
+     * @apiHeader {String} ContentTypes:application/json
+     *
+     * @apiDescription Allow to register user.
+     * Password must be hashed in SHA512.
+     *
+     * @apiSuccess User Model without password
+     */
     return function(req, res, next){
         var username    = req.body.username,
             password    = req.body.password,
