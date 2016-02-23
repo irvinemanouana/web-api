@@ -11,7 +11,8 @@ module.exports = function(app) {
      *
      * @apiHeader {String} ContentTypes:application/json
      *
-     * @apiParam {String} id
+     * @apiParam {String} id Category ID
+     * @apiParam {String} name Body parameter [Require]
      *
      * @apiDescription Allow to update category.
      * This API is available for admin.

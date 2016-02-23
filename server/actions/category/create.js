@@ -11,6 +11,8 @@ module.exports = function(app) {
      *
      * @apiHeader {String} ContentTypes:application/json
      *
+     * @apiParam {String} name Body parameter [Require]
+     *
      * @apiDescription Allow to create category.
      * This API is available for admin.
      *
