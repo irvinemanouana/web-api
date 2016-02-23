@@ -8,7 +8,7 @@ module.exports = function(app) {
             description     = req.body.description,
             dateString      = req.body.date,
             date            = new Date(dateString),
-            dateNow         = new Date(); 
+            dateNow         = new Date();
 
         var eventApp = new app.models.Event({
             title: title,
@@ -18,7 +18,6 @@ module.exports = function(app) {
             date: date
         });
 
-
         if ( global.isNullOrEmpty(title) || global.isNullOrEmpty(categoryId) || 
                 global.isNullOrEmpty(description) || global.isNullOrEmpty(dateString) ) {
             return next(app.errors.BAD_BODY_PARAMETER);
@@ -26,7 +25,7 @@ module.exports = function(app) {
         else if ( !global.isObjectId(categoryId) ) {
             return next(app.errors.OBJECT_ID_NOT_VALID);
         }
-        else if ( date.getTime() < dateNow.getTime()) {
+        else if ( !global.isDateValid(date) || date.getTime() < dateNow.getTime()) {
             return next(app.errors.DATE_NOT_VALID);
         }
         else {

@@ -24,7 +24,7 @@ module.exports = function(app) {
         else if ( !global.isObjectId(categoryId) ) {
             return next(app.errors.OBJECT_ID_NOT_VALID);
         }
-        else if ( date.getTime() < dateNow.getTime()) {
+        else if ( !global.isDateValid(date) || date.getTime() < dateNow.getTime()) {
             return next(app.errors.DATE_NOT_VALID);
         }
         else {
