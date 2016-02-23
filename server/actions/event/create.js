@@ -11,6 +11,11 @@ module.exports = function(app) {
      *
      * @apiHeader {String} ContentTypes:application/json
      *
+     * @apiParam {String} title          Body parameter [Require]
+     * @apiParam {String} categoryId     Body parameter [Require]
+     * @apiParam {String} description    Body parameter [Require]
+     * @apiParam {String} date           Body parameter [Require] Format:yyyy-MM-ddThh:mm:ssZ
+     *
      * @apiDescription Allow to create event.
      *
      * @apiSuccess Event Model

@@ -9,7 +9,7 @@ module.exports = function(app) {
      *
      * @apiVersion 1.0.0
      *
-     * @apiParam {String} id
+     * @apiParam {String} id Event ID
      *
      * @apiDescription Allow to remove event.
      *

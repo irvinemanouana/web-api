@@ -9,8 +9,8 @@ module.exports = function(app) {
      *
      * @apiVersion 1.0.0
      *
-     * @apiParam {String} id
-     * @apiParam {String} user
+     * @apiParam {String} id Event ID
+     * @apiParam {String} user User ID
      *
      * @apiDescription Allow to subscribe user to event.
      *

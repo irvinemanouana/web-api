@@ -11,6 +11,12 @@ module.exports = function(app) {
      *
      * @apiDescription Allow to get all events.
      *
+     * @apiParam {Integer} [count]      Query parameter Pagination
+     * @apiParam {Integer} [page]       Query parameter Pagination
+     * @apiParam {String} [sort]        Query parameter sort by date Value=asc||desc
+     * @apiParam {String} [categoryId]  Query parameter Filter by category
+     * @apiParam {String} [date]        Query parameter Filter by date; Value=passed||future||all
+     *
      * @apiSuccess Event Model
      */
     return function(req, res, next){

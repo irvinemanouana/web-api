@@ -10,6 +10,7 @@ module.exports = function(app) {
      * @apiVersion 1.0.0
      *
      * @apiParam {String} id
+     * @apiParam {File} image with field="event"
      *
      * @apiDescription Allow to create event.
      *
