@@ -1,7 +1,11 @@
 {
   "name": "esgi-event-iam-server",
-  "version": "0.0.0",
+  "description": "Event Server API",
+  "version": "1.0.0",
   "private": true,
+  "apidoc": {
+    "title": "Event API Documentation"
+  },
   "dependencies": {
     "bluebird": "^3.3.1",
     "body-parser": "^1.14.2",
