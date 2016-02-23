@@ -8,8 +8,12 @@ module.exports = function(app) {
      * @apiPermission OAuth2User
      *
      * @apiVersion 1.0.0
+     * 
+     * @apiParam {String} name          Body parameter [Require]
+     * @apiParam {String} firstname     Body parameter [Require]
      *
      * @apiDescription Allow to update user.
+     * Only username and fistname can be updated.
      *
      * @apiSuccess User Model without password
      */

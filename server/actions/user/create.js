@@ -11,6 +11,12 @@ module.exports = function(app) {
      *
      * @apiHeader {String} ContentTypes:application/json
      *
+     * @apiParam {String} username      Body parameter [Require]
+     * @apiParam {String} password      Body parameter [Require] hashed in SHA512
+     * @apiParam {String} email         Body parameter [Require]
+     * @apiParam {String} name          Body parameter [Require]
+     * @apiParam {String} firstname     Body parameter [Require]
+     *
      * @apiDescription Allow to register user.
      * Password must be hashed in SHA512.
      *

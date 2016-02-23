@@ -10,6 +10,8 @@ module.exports = function(app){
      * @apiName Authentication
      * @apiGroup OAuth2
      *
+     * @apiParam {String} grant_type          Body parameter grant_type allowed is password and refresh_token
+     *
      * @apiVersion 1.0.0
      *
      * @apiDescription OAuth2.

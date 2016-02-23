@@ -9,6 +9,8 @@ module.exports = function(app) {
      *
      * @apiVersion 1.0.0
      *
+     * @apiParam {File} image with field="avatar"
+     *
      * @apiDescription Allow to upload avatar's user.
      *
      * @apiSuccess User Model without password
