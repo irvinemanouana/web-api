@@ -1,6 +1,23 @@
 "use strict"
 
 module.exports = function(app) {
+    /**
+     * @api {PUT} /api/category/:id Update category
+     * @apiName Update
+     * @apiGroup Category
+     * @apiPermission OAuth2User
+     *
+     * @apiVersion 1.0.0
+     *
+     * @apiHeader {String} ContentTypes:application/json
+     *
+     * @apiParam {String} id
+     *
+     * @apiDescription Allow to update category.
+     * This API is available for admin.
+     *
+     * @apiSuccess Category Model
+     */
     return function(req, res, next){
         var userId              = req.user.id,
             categoryId          = req.params.id,

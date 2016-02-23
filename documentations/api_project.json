@@ -1,0 +1,1 @@
+{  "title": "Event API Documentation",  "name": "esgi-event-iam-server",  "version": "1.0.0",  "description": "Event Server API",  "sampleUrl": false,  "apidoc": "0.2.0",  "generator": {    "name": "apidoc",    "time": "2016-02-23T18:40:44.718Z",    "url": "http://apidocjs.com",    "version": "0.15.1"  }}

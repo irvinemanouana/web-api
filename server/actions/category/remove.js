@@ -1,6 +1,20 @@
 "use strict"
 
 module.exports = function(app) {
+    /**
+     * @api {DELETE} /api/category/:id Remove category
+     * @apiName Remove
+     * @apiGroup Category
+     * @apiPermission OAuth2User
+     *
+     * @apiVersion 1.0.0
+     *
+     * @apiParam {String} id
+     *
+     * @apiDescription Allow to delete category.
+     *
+     * @apiSuccess Category Model
+     */
     return function(req, res, next){
         var userId      = req.user.id,
             categoryId  = req.params.id;

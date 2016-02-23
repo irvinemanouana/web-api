@@ -1,6 +1,20 @@
 "use strict"
 
 module.exports = function(app) {
+    /**
+     * @api {GET} /api/category/:id Show category
+     * @apiGroup Category
+     * @apiName Show
+     * @apiPermission OAuth2User
+     *
+     * @apiVersion 1.0.0
+     *
+     * @apiParam {String} id
+     *
+     * @apiDescription Allow to show one category.
+     *
+     * @apiSuccess Category Model
+     */
     return function(req, res, next){
         var categoryId = req.params.id;
 
